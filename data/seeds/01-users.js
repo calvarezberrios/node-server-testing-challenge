@@ -2,13 +2,13 @@
 exports.seed = function(knex) {
   return knex("users").insert([
     {
-      fname: "Carlos",
-      lname: "Alvarez",
-      email: "carlos-alvarez-berrios@lambdastudents.com",
-      username: "calvarez",
+      fname: "Test",
+      lname: "Tester",
+      email: "tester@lambdastudents.com",
+      username: "tester",
       password: "1234",
-      dependents: 3,
-      marital_status: "Married"
+      dependents: 0,
+      marital_status: "Single"
     }
   ])
   .then(() => console.log("\n** Users table seeded successfully! **\n"));
