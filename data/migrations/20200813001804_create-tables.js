@@ -6,6 +6,7 @@ exports.up = function(knex) {
             tbl.string("fname", 128).notNullable();
             tbl.string("lname", 128).notNullable();
             tbl.string("email", 128).notNullable().unique();
+            tbl.varchar("username", 128).notNullable().unique();
             tbl.varchar("password", 128).notNullable();
             tbl.integer("dependents").defaultTo(0);
             tbl.string("marital_status", 128).defaultTo("Single");
@@ -17,7 +18,7 @@ exports.up = function(knex) {
             tbl.string("pay_type", 128).notNullable().defaultTo("hourly");
             tbl.string("pay_frequency", 128).notNullable().defaultTo("biweekly");
             tbl.double("overtime", 2).defaultTo(1.5);
-            tbl.integer("user_id").unsigned().notNullable().references("users.id");
+            tbl.varchar("username", 128).unsigned().notNullable().references("users.username");
         })
         .then(() => console.log("\n*** Created Tables, Ready To Seed ***\n"));
 };
