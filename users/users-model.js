@@ -14,7 +14,7 @@ function findAll() {
 }
 
 function findById(id) {
-    return db("users").where({ id }).first();
+    return db("users").where({ id: id }).first();
 }
 
 function findBy(filter) {
@@ -22,9 +22,10 @@ function findBy(filter) {
 }
 
 function add(user) {
-    return db("users").insert(user, "id").first()
-        .then(id => {
-            return findById(id);
+    return db("users")
+        .insert(user, "id")
+        .then(ids => {
+            return findById(ids[0]);
         });
 }
 

@@ -9,9 +9,14 @@ router.post("/login", (req, res) => {
     if(!(username && password)) {
         res.status(400).json({ message: "Missing username and/or password"});
     } else {
+
         Users.findBy({ username })
             .then(user => {
-                res.status(200).json(user);
+                if(user && bcrypt.compareSync(password, user.password)) {
+                    res.status(200).json(user);
+                } else {
+                    res.status(403).json({ message: "Invalid username or password" });
+                }
             })
             .catch(err => res.status(500).json({ message: "Error retrieving user data", err}));
     }
