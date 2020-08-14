@@ -18,7 +18,12 @@ exports.up = function(knex) {
             tbl.string("pay_type", 128).notNullable().defaultTo("hourly");
             tbl.string("pay_frequency", 128).notNullable().defaultTo("biweekly");
             tbl.double("overtime", 2).defaultTo(1.5);
-            tbl.varchar("username", 128).unsigned().notNullable().references("users.username");
+            tbl.varchar("username", 128)
+                .unsigned()
+                .notNullable()
+                .references("users.username")
+                .onUpdate("CASCADE")
+                .onDelete("CASCADE");
         })
         .then(() => console.log("\n*** Created Tables, Ready To Seed ***\n"));
 };

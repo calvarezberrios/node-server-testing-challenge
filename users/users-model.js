@@ -10,7 +10,7 @@ module.exports = {
 }
 
 function findAll() {
-    return null;
+    return db("users");
 }
 
 function findById(id) {
@@ -30,7 +30,7 @@ function add(user) {
 }
 
 function remove(id) {
-    return null;
+    return db("users").where({id: id}).delete();
 }
 
 function update(changes, id) {

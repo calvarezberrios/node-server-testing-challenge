@@ -53,7 +53,7 @@ describe("Auth Router", () => {
         });
 
         test("should return an object that has the username of the user logged on", () => {
-            expect(res.body.username).toEqual("calvarez");
+            expect(res.body).toHaveProperty("username");
         });
 
         test("should fail with status 403 Forbidden", async () => {
@@ -63,7 +63,7 @@ describe("Auth Router", () => {
         });
 
         test("cleans out the database after all tests", async () => {
-            await Promise.all([db("income").truncate(), db("users").truncate()]);
+            await db("users").truncate();
         });
     });
 })

@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const secrets = require("../config/secrets.js");
 
 const Users = require("../users/users-model.js");
 
@@ -13,7 +15,8 @@ router.post("/login", (req, res) => {
         Users.findBy({ username })
             .then(user => {
                 if(user && bcrypt.compareSync(password, user.password)) {
-                    res.status(200).json(user);
+                    const token = generateToken(user);
+                    res.status(200).json({username: user.username, token});
                 } else {
                     res.status(403).json({ message: "Invalid username or password" });
                 }
@@ -39,5 +42,19 @@ router.post("/register", (req, res) => {
             .catch(err => res.status(500).json({ message: "Error adding user to database", err }));
     }
 });
+
+function generateToken(user) {
+    const payload = {
+        subject: user.id,
+        username: user.username,
+        created_at: Date.now(),
+    };
+
+    const options = {
+        expiresIn: "1h",
+    };
+
+    return jwt.sign(payload, secrets.jwtSecret, options);
+}
 
 module.exports = router;
